@@ -103,26 +103,33 @@ if ($_POST && !$instalado) {
             ";
             
             $pdo->exec($sql);
+                     // Criar usuário administrador padrão
+            $senha_hash = password_hash('admin123', PASSWORD_DEFAULT);
+            $pdo->exec(\"
+                INSERT INTO usuarios (nome, email, senha) 
+                VALUES ('Administrador', 'admin@sistema.com', '$senha_hash')
+            \");
             
-            // Criar usuário administrador
-            $senha_hash = password_hash($admin_senha, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)");
-            $stmt->execute([$admin_nome, $admin_email, $senha_hash]);
-            
-            // Inserir dados iniciais
-            $pdo->exec("
+            // Inserir dados iniciais - Centro de Custos
+            $pdo->exec(\"
                 INSERT INTO centro_custos (nome) VALUES 
                 ('Administrativo'),
                 ('Vendas'),
                 ('Marketing'),
-                ('Operacional');
-                
+                ('Operacional')
+            \");
+            
+            // Inserir dados iniciais - Categorias
+            $pdo->exec(\"
                 INSERT INTO categorias (nome) VALUES 
                 ('Receitas'),
                 ('Despesas Operacionais'),
                 ('Despesas Administrativas'),
-                ('Investimentos');
-                
+                ('Investimentos')
+            \");
+            
+            // Inserir dados iniciais - Subcategorias
+            $pdo->exec(\"
                 INSERT INTO subcategorias (nome, categoria_id) VALUES 
                 ('Vendas de Produtos', 1),
                 ('Prestação de Serviços', 1),
@@ -135,8 +142,8 @@ if ($_POST && !$instalado) {
                 ('Viagens e Hospedagem', 3),
                 ('Treinamentos', 3),
                 ('Equipamentos', 4),
-                ('Software', 4);
-            ");
+                ('Software', 4)
+            \");
             
             $sucesso = 'Sistema instalado com sucesso! Você pode fazer login agora.';
             $instalado = true;

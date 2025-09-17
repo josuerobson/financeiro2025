@@ -156,7 +156,7 @@ $contas_receber = $stmt->fetchAll();
     <div class="alert alert-success"><?php echo $sucesso; ?></div>
 <?php endif; ?>
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+<div class="resumo-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
     <!-- Resumo -->
     <div class="card">
         <h3 class="card-title">Resumo</h3>
@@ -404,5 +404,131 @@ $contas_receber = $stmt->fetchAll();
         </div>
     <?php endif; ?>
 </div>
+
+<style>
+/* CSS responsivo específico para contas a pagar e receber */
+@media (max-width: 768px) {
+    /* Reorganizar resumo em coluna única no mobile */
+    .resumo-container {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    
+    /* Ajustar cards do resumo */
+    .card {
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .card-title {
+        font-size: 16px !important;
+        margin-bottom: 10px !important;
+    }
+    
+    /* Reorganizar grid interno dos resumos */
+    .card div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    
+    /* Ajustar tabelas para scroll horizontal */
+    .table {
+        font-size: 12px !important;
+    }
+    
+    .table th,
+    .table td {
+        padding: 8px 4px !important;
+        white-space: nowrap;
+    }
+    
+    /* Ocultar colunas menos importantes no mobile */
+    .table th:nth-child(3),
+    .table td:nth-child(3) {
+        display: none; /* Ocultar Centro de Custo */
+    }
+    
+    .table th:nth-child(5),
+    .table td:nth-child(5) {
+        display: none; /* Ocultar Tipo */
+    }
+    
+    /* Ajustar largura das colunas restantes */
+    .table th:nth-child(1),
+    .table td:nth-child(1) {
+        width: 25%;
+    }
+    
+    .table th:nth-child(2),
+    .table td:nth-child(2) {
+        width: 30%;
+    }
+    
+    .table th:nth-child(4),
+    .table td:nth-child(4) {
+        width: 25%;
+    }
+    
+    .table th:nth-child(6),
+    .table td:nth-child(6) {
+        width: 10%;
+    }
+    
+    .table th:nth-child(7),
+    .table td:nth-child(7) {
+        width: 10%;
+    }
+    
+    /* Ajustar vencimentos próximos */
+    .card div[style*="max-height"] {
+        max-height: 200px !important;
+    }
+    
+    /* Melhorar espaçamento dos alertas de vencimento */
+    .card div[style*="border-left"] {
+        padding: 8px !important;
+        margin-bottom: 8px !important;
+        font-size: 11px !important;
+    }
+    
+    /* Ajustar valores monetários */
+    div[style*="font-size: 20px"] {
+        font-size: 16px !important;
+    }
+    
+    div[style*="font-size: 24px"] {
+        font-size: 18px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Ajustes para telas muito pequenas */
+    .resumo-container {
+        gap: 10px !important;
+    }
+    
+    .card {
+        padding: 10px !important;
+    }
+    
+    .table {
+        font-size: 11px !important;
+    }
+    
+    .table th,
+    .table td {
+        padding: 6px 2px !important;
+    }
+    
+    /* Tornar valores mais compactos */
+    div[style*="font-size: 16px"] {
+        font-size: 14px !important;
+    }
+    
+    div[style*="font-size: 18px"] {
+        font-size: 16px !important;
+    }
+}
+</style>
 
 <?php include 'includes/footer.php'; ?>

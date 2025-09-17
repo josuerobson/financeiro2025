@@ -342,7 +342,11 @@ body {
     
     .sidebar {
         width: 100%;
-        order: -1;
+        order: 1; /* Sidebar aparece depois do conteúdo principal no mobile */
+    }
+    
+    .main-content {
+        order: 0; /* Conteúdo principal aparece primeiro no mobile */
     }
     
     .nav-list {

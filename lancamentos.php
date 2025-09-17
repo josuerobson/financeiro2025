@@ -126,6 +126,48 @@ $centros_custo = $stmt->fetchAll();
 $stmt = $pdo->query("SELECT * FROM categorias ORDER BY nome");
 $categorias = $stmt->fetchAll();
 
+// Verificar se existem dados básicos, se não, criar dados iniciais
+if (empty($centros_custo)) {
+    $pdo->exec("
+        INSERT INTO centro_custos (nome) VALUES 
+        ('Administrativo'),
+        ('Vendas'),
+        ('Marketing'),
+        ('Operacional')
+    ");
+    $stmt = $pdo->query("SELECT * FROM centro_custos ORDER BY nome");
+    $centros_custo = $stmt->fetchAll();
+}
+
+if (empty($categorias)) {
+    $pdo->exec("
+        INSERT INTO categorias (nome) VALUES 
+        ('Receitas'),
+        ('Despesas Operacionais'),
+        ('Despesas Administrativas'),
+        ('Investimentos')
+    ");
+    
+    $pdo->exec("
+        INSERT INTO subcategorias (nome, categoria_id) VALUES 
+        ('Vendas de Produtos', 1),
+        ('Prestação de Serviços', 1),
+        ('Receitas Financeiras', 1),
+        ('Salários e Encargos', 2),
+        ('Aluguel', 2),
+        ('Energia Elétrica', 2),
+        ('Telefone e Internet', 2),
+        ('Material de Escritório', 3),
+        ('Viagens e Hospedagem', 3),
+        ('Treinamentos', 3),
+        ('Equipamentos', 4),
+        ('Software', 4)
+    ");
+    
+    $stmt = $pdo->query("SELECT * FROM categorias ORDER BY nome");
+    $categorias = $stmt->fetchAll();
+}
+
 // Listar lançamentos
 $filtro_tipo = $_GET['filtro_tipo'] ?? '';
 $filtro_data_inicio = $_GET['filtro_data_inicio'] ?? '';
@@ -428,5 +470,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
+<style>
+/* Ocultar sidebar no mobile apenas na página de lançamentos */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none !important;
+    }
+    
+    .main-content {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+</style>
 
 <?php include 'includes/footer.php'; ?>
