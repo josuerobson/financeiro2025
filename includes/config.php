@@ -1,7 +1,7 @@
 <?php
 // Configurações do banco de dados
-define('DB_HOST', 'mysql://mysql:bd3becd5eed6baf1405f@waha_financeiro:3306/waha');
-define('DB_NAME', 'financeiro_ademar');
+define('DB_HOST', 'waha_financeiro');
+define('DB_NAME', 'waha');
 define('DB_USER', 'mysql');
 define('DB_PASS', 'bd3becd5eed6baf1405f');
 
